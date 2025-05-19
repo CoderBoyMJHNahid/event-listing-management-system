@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logout</title>
+  <!-- AdminLTE and Bootstrap CSS (optional for styling) -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+</head>
+<body class="hold-transition login-page">
+
+  <div class="login-box">
+    <div class="card card-outline card-danger">
+      <div class="card-header text-center">
+        <a href="#" class="h1"><b>Admin</b>Panel</a>
+      </div>
+      <div class="card-body text-center">
+        <p class="login-box-msg">Logging you out...</p>
+        <div class="spinner-border text-danger" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Clear user data and redirect
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
+  </script>
+</body>
+</html>
