@@ -17,45 +17,107 @@ header {
   z-index: 999;
   background-color: white;
   padding: 20px 0;
-  transition: padding 0.3s ease;
+  transition: padding 0.2s ease;
+  box-shadow: 0 0 6px 1px #0000001a;
 }
 header.scrolled {
   padding: 2px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 img {
   max-width: 100%;
 }
 .nav-item {
-  padding: 0px 10px;
+  padding: 10px;
 }
 .nav-link {
   color: #999;
   padding: 0px !important;
-  transition: all 0.3s ease-in-out;
+  font-size: 16px;
   position: relative;
-
-  &:hover::after {
-    content: "";
-    display: block;
-    width: 50%;
-    height: 2px;
-    background-color: #6a1651;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  &:hover {
+    color: #6a1651;
   }
-
-  &.active::after {
-    content: "";
-    display: block;
-    width: 50%;
-    height: 2px;
-    background-color: #6a1651;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+}
+.sidebar_cat_wrapper li {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #ededed;
+  margin-bottom: 10px;
+  margin-right: 8px;
+  border-radius: 5px;
+  transition: all 0.3s;
+  &:hover {
+    background: #6a1651;
   }
+  &:hover a{
+    color: white;
+  }
+}
+
+.sidebar_cat_wrapper li a {
+  color: #343434;
+  text-decoration: none;
+  font-size: 14px;
+}
+.nav-link.active {
+  color: #6a1651 !important;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 2px;
+  background-color: #6a1651;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.nav-link.dropdown_has:hover::after {
+  content: "";
+  display: none !important;
+}
+
+/* Show dropdown on hover */
+.nav-item.position-relative:hover .dropdown_menu.position-absolute {
+  opacity: 1 !important;
+  transform: scaleY(1) !important;
+}
+
+/* Dropdown styles */
+.dropdown_menu.position-absolute {
+  background: #343434;
+  width: 200px;
+  opacity: 0;
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: all 0.3s;
+  z-index: 99;
+  margin-top: 10px;
+}
+
+/* Dropdown list and links */
+.dropdown_menu.position-absolute ul {
+  margin: 0;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.dropdown_menu.position-absolute ul li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown_menu.position-absolute ul li {
+  padding: 12px 20px;
+  transition: all 0.3s;
+}
+
+.dropdown_menu.position-absolute ul li:hover {
+  background: #7e184e;
 }
 .input-wrapper {
   display: flex;
@@ -398,7 +460,6 @@ a.learn-more:hover .button-text {
 }
 #gallery_section {
   background: #f5f5f5;
-  padding-bottom: 260px !important;
 }
 ul#gallery_content {
   padding: 0;
@@ -456,9 +517,19 @@ div#gallery_menu {
     color: #333;
   }
 }
+#searchInput{
+  color: #333 !important;
+}
 footer {
-  background: #7e184e;
+  background: #6a1651;
   color: #f7f7f7;
+  p{
+    color: #919191;
+    font-size: 14px;
+  }
+  li{
+    color: #919191;
+  }
   li a {
     text-decoration: none;
     color: #f7f7f7;

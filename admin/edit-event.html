@@ -383,7 +383,7 @@
             url: `${BACKEND_API_URL}/events/${eventId}`,
             method: "GET",
             success: function (response) {
-              const event = response.data || response;
+              const event = response.data.main || response;
 
               $("#edit_event_name").val(event.title);
 
