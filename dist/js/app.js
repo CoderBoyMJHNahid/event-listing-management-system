@@ -38,7 +38,7 @@ $(document).ready(function () {
           });
 
           uniqueCategories.forEach((category) => {
-            li_data += `<li data-filter=".${category}">${category}</li>`;
+            li_data += `<li data-filter=".${category.replace(/\s+/g, '_')}">${category}</li>`;
           });
 
           const isIndexPage =
@@ -50,7 +50,7 @@ $(document).ready(function () {
 
           galleryItems.forEach((gallery) => {
             image_data += `
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4 grid-item ${gallery.categoryName}">
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4 grid-item ${gallery.categoryName.replace(/\s+/g, '_')}">
               <a href="${BACKEND_API_URL}/uploads/${gallery.image}" class="gripImg">
                 <img class="gripImg_img" src="${BACKEND_API_URL}/uploads/${gallery.image}" alt="${gallery.imageTitle}" />
               </a>
