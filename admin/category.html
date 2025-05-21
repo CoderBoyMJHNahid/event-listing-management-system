@@ -60,7 +60,9 @@
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
       <!-- Navbar -->
-      <nav class="main-header justify-content-between navbar navbar-expand navbar-white navbar-light">
+      <nav
+        class="main-header justify-content-between navbar navbar-expand navbar-white navbar-light"
+      >
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -73,7 +75,11 @@
             ></a>
           </li>
         </ul>
-        <a class="mr-4" href="logout.html">Logout</a>
+        <a
+          class="mr-4"
+          href="logout.html"
+          >Logout</a
+        >
       </nav>
       <!-- /.navbar -->
 
@@ -173,7 +179,9 @@
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                  <li class="breadcrumb-item">
+                    <a href="dashboard.html">Home</a>
+                  </li>
                   <li class="breadcrumb-item active">Category</li>
                 </ol>
               </div>
@@ -241,7 +249,10 @@
         class="modal-dialog"
         role="document"
       >
-        <form id="addCategoryForm">
+        <form
+          id="addCategoryForm"
+          enctype="multipart/form-data"
+        >
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Add Category</h5>
@@ -263,6 +274,16 @@
                   class="form-control"
                   id="addCategoryName"
                   name="name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="addCategoryName">Category Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="categoryImg"
+                  name="categoryImg"
                   required
                 />
               </div>
@@ -301,7 +322,7 @@
         class="modal-dialog"
         role="document"
       >
-        <form id="editCategoryForm">
+        <form id="editCategoryForm" enctype="multipart/form-data">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Edit Category</h5>
@@ -329,6 +350,18 @@
                   id="editCategoryName"
                   name="name"
                   required
+                />
+              </div>
+              <div class="form-group">
+                <label for="addCategoryName">Category Image</label>
+                <br>
+                <img id="category_img_edit" class="py-3" width="300px" src="dist/img/avatar2.png" alt="Category Images">
+                <p>If you want to the image then select images below</p>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="editcategoryImg"
+                  name="editcategoryImg"
                 />
               </div>
             </div>

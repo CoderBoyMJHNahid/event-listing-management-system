@@ -10,7 +10,7 @@ $(document).ready(function () {
     if (val) {
       window.location.href = `search.html?title=${val}`;
     }
-  })
+  });
   // Delegate event handler for filter clicks
   $(document).on("click", "#gallery_content li", function () {
     var filterValue = $(this).attr("data-filter");
@@ -24,21 +24,37 @@ $(document).ready(function () {
       filter: filterValue,
     });
   });
-
   function loadedGallery() {
     $.get(`${BACKEND_API_URL}/gallery`)
       .then((res) => {
         let li_data = `<li data-filter="*" class="active">All</li>`;
         let image_data = "";
+
+        const uniqueCategories = new Set();
+
         if (res.length > 0) {
           res.forEach((gallery) => {
-            li_data += `<li data-filter=".${gallery.categoryName}">${gallery.categoryName}</li>`;
+            uniqueCategories.add(gallery.categoryName);
+          });
+
+          uniqueCategories.forEach((category) => {
+            li_data += `<li data-filter=".${category}">${category}</li>`;
+          });
+
+          const isIndexPage =
+            window.location.pathname.endsWith("index.html") ||
+            window.location.pathname.endsWith("/") ||
+            window.location.pathname === "";
+
+          const galleryItems = isIndexPage ? res.slice(0, 12) : res;
+
+          galleryItems.forEach((gallery) => {
             image_data += `
-              <div class="col-sm-6 col-md-4 col-lg-3 mb-4 grid-item ${gallery.categoryName}">
-                <a href="${BACKEND_API_URL}/uploads/${gallery.image}" class="gripImg">
-                  <img class="gripImg_img" src="${BACKEND_API_URL}/uploads/${gallery.image}" alt="${gallery.imageTitle}" />
-                </a>
-              </div>`;
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4 grid-item ${gallery.categoryName}">
+              <a href="${BACKEND_API_URL}/uploads/${gallery.image}" class="gripImg">
+                <img class="gripImg_img" src="${BACKEND_API_URL}/uploads/${gallery.image}" alt="${gallery.imageTitle}" />
+              </a>
+            </div>`;
           });
 
           $("#gallery_content").html(li_data);
@@ -83,57 +99,37 @@ $(document).ready(function () {
   loadedGallery();
 
   function loadLastEvent() {
-    $.get(`${BACKEND_API_URL}/events/latest`)
+    $.get(`${BACKEND_API_URL}/category`)
       .then((res) => {
-        if (res.success) {
-          const data = res.data;
+        console.log("🚀 ~ .then ~ res:", res);
 
-          let eventHtml = "";
-          data.slice(0, 6).forEach((elem) => {
-            const shortDescription = findText(elem);
-            eventHtml += `
+        const data = res;
+
+        let eventHtml = "";
+        data.forEach((elem) => {
+          eventHtml += `
               <div class="col-lg-4 mb-4">
-              <div class="card_wrapper position-relative">
-                <div
-                  class="category_type_text position-absolute top-0 start-0 bg-white px-3 py-1"
-                >
-                  ${elem.type}
-                </div>
-                <div class="img_wrapper overflow-hidden">
-                  <a href="single-event.html?id=${elem.id}">
-                    <img
-                      src="${elem.thumbnail}"
-                      alt="Event image"
-                    />
-                  </a>
-                </div>
-                <div class="card_desc p-4">
-                  <p class="category_name_card">
-                    <a
-                      href="category.html?id=${elem.category}"
-                      class="text-decoration-none"
-                      >${elem.category_name}</a
-                    >
-                  </p>
-                  <h4>
-                    <a
-                      href="single-event.html?id=${elem.id}"
-                      class="text-decoration-none"
-                      >${elem.title.substring(0, 30)} ....</a
-                    >
-                  </h4>
-                  <p>
-                    ${shortDescription}
-                  </p>
-                </div>
-              </div>
-            </div>
+  <div class="card_wrapper position-relative">
+    <div class="img_wrapper overflow-hidden position-relative">
+      <a href="category.html?id=${elem.id}">
+        <img
+          src="${BACKEND_API_URL}/uploads/${elem.img}"
+          alt="Event image"
+          class="img-fluid"
+        />
+      </a>
+      <h4 class="image-title text-center m-0">
+        <a
+          href="category.html?id=${elem.id}"
+          class="text-decoration-none text-white"
+        >${elem.name}</a>
+      </h4>
+    </div>
+  </div>
+</div>
             `;
-          });
-          $(".fetch_lasted_event").html(eventHtml);
-        } else {
-          console.log(res);
-        }
+        });
+        $(".fetch_lasted_event").html(eventHtml);
       })
       .catch((error) => {
         console.error("Error loading last event:", error);
@@ -345,7 +341,6 @@ $(document).ready(function () {
   function loadCategory() {
     $.get(`${BACKEND_API_URL}/category`)
       .then((res) => {
-
         let eventHtml = "";
         res.forEach((elem) => {
           eventHtml += `<li><a href="category.html?id=${elem.id}">${elem.name}</a></li>`;

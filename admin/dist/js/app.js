@@ -75,6 +75,12 @@ $(document).ready(function () {
       { data: "name" },
       {
         data: null,
+        render: function (data, type, row, meta) {
+          return `<img src="${BACKEND_API_URL}/uploads/${row.img}" alt="${row.name}" style="max-width: 100px; max-height: 100px;"/>`;
+        },
+      },
+      {
+        data: null,
         render: function (data, type, row) {
           return `
             <button class="btn btn-success btn-sm edit-btn" data-id="${
@@ -189,15 +195,18 @@ $(document).ready(function () {
     ],
   });
 
-  // Handle Add Category form submission
+  // Handle Add Category form submission with file upload
   $("#addCategoryForm").submit(function (e) {
     e.preventDefault();
-    const formData = $(this).serialize();
+
+    const formData = new FormData(this);
 
     $.ajax({
       url: `${BACKEND_API_URL}/category`,
       method: "POST",
       data: formData,
+      contentType: false,
+      processData: false,
       dataType: "json",
       success: function (res) {
         if (res.success) {
@@ -222,18 +231,24 @@ $(document).ready(function () {
     let rowData = table.row($(this).closest("tr")).data();
     $("#editCategoryId").val(categoryId);
     $("#editCategoryName").val(rowData.name);
+    $("#category_img_edit").attr(
+      "src",
+      BACKEND_API_URL + "/uploads/" + rowData.img
+    );
   });
 
   // Handle Edit Category form submission
   $("#editCategoryForm").on("submit", function (e) {
     e.preventDefault();
     let categoryId = $("#editCategoryId").val();
-    let formData = $(this).serialize();
+    const formData = new FormData(this);
 
     $.ajax({
       url: `${BACKEND_API_URL}/category/${categoryId}`,
       type: "PUT",
       data: formData,
+      contentType: false,
+      processData: false,
       dataType: "json",
       success: function (res) {
         if (res.success) {

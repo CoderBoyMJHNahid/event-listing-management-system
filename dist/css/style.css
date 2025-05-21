@@ -182,10 +182,13 @@ img {
   object-fit: cover;
   object-position: center;
 }
+.img_wrapper.overflow-hidden img {
+    height: 280px;
+}
 .carousel-caption {
   bottom: 35%;
   h2 {
-    font-size: 45px;
+    font-size: 35px;
   }
 }
 .title_text {
@@ -201,13 +204,38 @@ img {
   position: relative;
   overflow: hidden;
 }
+.img_wrapper.category.overflow-hidden {
+    width: 180px !important;
+}
+.image-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  padding: 10px 20px;
+  border-radius: 8px;
+  a{
+    font-size: 26px !important;
+  }
+}
+
+.img_wrapper:hover .image-title {
+  opacity: 1;
+}
 
 .img_wrapper img {
-  height: 350px;
   width: 100%;
   object-fit: cover;
   object-position: center;
   transition: transform 0.3s;
+}
+.img_wrapper.category.overflow-hidden img {
+    object-fit: cover;
+    height: 160px !important;
+    width: 180px !important;
 }
 
 .img_wrapper:hover img {
@@ -503,6 +531,9 @@ div#gallery_menu {
 .gripImg {
   img {
     border-radius: 10px;
+    height: 185px;
+    width: 100%;
+    object-fit: cover;
   }
 }
 .gripImg_img {
@@ -520,6 +551,7 @@ div#gallery_menu {
 #searchInput{
   color: #333 !important;
 }
+
 footer {
   background: #6a1651;
   color: #f7f7f7;
